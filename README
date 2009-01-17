@@ -1,0 +1,75 @@
+TEsTris is a tetris-like developed by Simon Busard.
+Visit sibork.free.fr/blog/
+
+Tetris musics contained in music/ come from http://wrongway.org/?polltetris.
+
+
+How to play
+-----------
+
+On free screen :
+ - "ESC" or "q" to quit
+ - "n" or "j" to play
+
+In game :
+ - "LEFT" and "RIGHT" to move left and right (respectively)
+ - "UP" to turn the current piece
+ - "DOWN" to make the piece going down faster
+ - "SPACE" or "d" to drop the piece
+ - "SHIFT" to move faster
+ - "u" or "z" to undo last piece
+ - "p" to pause/unpause
+ - "s" to stop and return to free screen
+ - "n" to start new game
+ - "m" to mute/unmute music
+ - "c" to make volume higher
+ - "v" to make volume lower
+ - "ESC" or "q" to quit
+
+
+Configuration
+-------------
+
+You can configure several settings of the game in the file TEsTris.conf.
+
+
+Versions history
+----------------
+
+ - 0.9-beta : :
+    + Source of music added in README
+    + AI
+    + Mouse managment
+ - 0.8-beta : 08.04.2008 :
+    + Memory leaks fixed
+    + Bugs fixed
+    + "u" or "z" to undo last piece
+    + Configuration file
+    + Music added
+ - 0.7-beta : 08.03.2008 :
+    + Distributed under GPL Licence
+ - 0.6-beta : 06.03.2008 :
+    + Space bar bug fixed
+ - 0.5-beta : 04.03.2008 :
+    + Key "d" drops too
+    + Shift actived and turn one-by-one
+    + Bug of the timer fixed
+    + Add piece ghost
+    + Update colors
+    + Optimize "PAUSE" and "GAME OVER" display
+ - 0.4-beta : 29.02.2008 :
+    + Bugs fixed
+    + Algorithms optimisation
+    + Add shift to move faster
+    + Colored pieces
+    + Window focus managed
+ - 0.3-beta : 23.02.2008 :
+    + Update of turning pieces
+    + Bugs fixed
+    + Display of the next piece
+ - 0.2-beta : 21.02.2008 :
+    + PAUSE and GAME OVER displayed
+    + Scores displayed
+ - 0.1-beta : 20.02.2008 : 
+    + first version of the game
+

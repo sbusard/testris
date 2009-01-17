@@ -1,0 +1,81 @@
+FEATURES
+--------
+- Permettre la sauvegarde dans TEsTris
+- Sauvegardes automatiques
+- Ajouter la "trace" de la pièce qui fait perdre la partie
+- High scores => scores stockés dans un fichier
+- Boutons et commandes possibles intégrés au jeu lui-même (déjà dans le README)
+- Pouvoir modifier les options par ligne de commandes
+- Améliorer la rotation des pièces le long des autres pièces et pas seulement près des murs
+- Effet visuel lorsqu'on passe de niveau
+- Option niveau encombré
+- Option niveau initial non nul
+- Changer la distribution des pièces
+- Utiliser des heuristiques pour estimer la pièce dont l'utilisateur a besoin
+- Statistiques sur les scores
+- Permettre la modification de la vitesse et du coef des scores dans les options => afficher les coefs dans les scores!!!
+- Utiliser l'unicode pour résoudre le problème du clavier qwerty sous windows et permettre en plus de modifier les touches claviers
+- ICONE
+- Multijoueur : plusieurs pièces
+- Mode : plusieurs pièces en même temps
+- Tableau à hauteur dynamique!!!
+- Jouer à la souris => améliorer la façon de jouer :
+    - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
+    - permettre le undo avec la souris
+
+X IA qui joue à ma place
+X Enregistrer les scores même quand on n'a pas game over
+X CITER LA SOURCE DES MUSIQUES
+X Mettre de la musique
+X Améliorer undo : garder un historique des X derniers coups (sauvegarder l'entièreté du modèle et la pièce)
+X Undo
+X fichier de configuration
+X Quand les couleurs seront en place, éclaircir la pièce courante pour pouvoir différencier pièce courante non posée et pièce courante posée
+X Revoir la couleur de pièces (problème avec PAUSE et GAME OVER)
+X Piece ghost
+X Quand shift est enfoncée, la touche flèche haut devrait ne fonctionner qu'une fois par pression
+X Quand la fenêtre n'a plus le focus, mettre le jeu en pause
+X Colorer les pièces
+X Ajouter une touche supplémentaire (par exemple ctrl ou shift) qui, combinée à une touche directionnelle, permet une réaction plus rapide (repeatKey plus court)
+X Ajouter l'affichage des scores
+X Ajouter l'affichage de "Pause" et "Game Over"
+X Modifier la manière de gérer les rotations contre les murs
+X Afficher la pièce suivante
+
+NOTES
+-----
+- Afficher l'heure et la date lorsqu'on affiche un message d'erreur.  Créer un fichier time.c qui transforme la date en un format affichable.
+- Créer un fichier de logs au lieu de tout printer sur stdout.  Ajouter la date, l'heure, le fichier et la ligne d'appel de la fonction d'erreur.
+- Nettoyer le code
+- Centraliser toutes les infos sur les pieces dans pieces.h.  Ex: ramener les définitions de tableau de add, etc. dans pieces.h, éviter la redondance (par ex les couleurs) dans pieces.h,...
+- Réécrire error.h avec une macro pour le debug (voir Louvain/Cours/Q5/INGI1131/Projet1/not_so_old_src/constants.h)
+- GTK
+- Versionnement
+- Mettre les fonctions internes en static
+
+X Améliorer error.c pour pouvoir donner plus d'argument => error.* a été supprimé, remplacé des fprintf(stderr,...).  Une façon de créer des logs est de rediriger stderr vers un fichier.
+
+BUGS
+----
+- La touche "q" ne fait rien 	=> Elle fonctionne sous linux...
+				=> Le bug n'apparait que sous windows : SDL considère le clavier en QWERTY !!!
+- La pièce bleue (DP) est décalée d'un pixel à droite, la rouge (BAR1) 1 pixel à gauche => illusion d'optique ???
+- Gestion de plusieurs évènements en même temps ? Quand on maintient gauche puis qu'on appuie sur shift, ça stoppe net
+- Blink lines : bug de couleur
+- Blink lines : bug évènements => flusher tous les évènements à la fin de check() ???
+
+X Dans l'IA, lorsqu'une première pièce pourrait faire des lignes, ces lignes ne sont pas enlevées pour tester la seconde pièce.
+X Undo ne tient pas compte des lignes effacées => sauvegarder tout le modèle?!
+X Memory leak!!! Revérifier toutes les allocations/désallocations => semble corrigé
+X Revoir l'implémentation de turn : peut-être créer un pieces.h
+X Bug of the moon : la barre d'espacement provoque toujours son bug : deux pièces tombent à la suite...
+X Descendre la pièce avec la flèche du bas provoque le bug de saccade
+X Bug "saccades" : vérifier les valeurs de retour de SDL_AddTimer et SDL_RemoveTimer ?
+X DP tourne mal.  Une étape descend d'un cran
+X Diminuer la sensibilité de la touche espace => la touche espace est désormais prise en compte une fois à chaque up/down et un délai a été ajouté entre chaque pression de la touche espace
+
+OTHERS
+------
+X Créer une page web où présenter le projet et diffuser le code => sibork.free.fr
+X Compléter le README par les fonctionnalités et commandes disponibles
+X Diffuser sous licence

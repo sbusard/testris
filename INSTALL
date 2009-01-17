@@ -1,0 +1,7 @@
+To install TEsTris, execute "make" in a shell.
+You have to get additional libraries :
+	- SDL library : http://www.libsdl.org/
+	- SDL-TTF library : http://www.libsdl.org/
+	- SDL-Mixer library : http://www.libsdl.org/projects/SDL_mixer/
+	
+To play, just run TEsTris.
