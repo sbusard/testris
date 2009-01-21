@@ -205,8 +205,8 @@ void add(struct Var_conf *config)
 		       pos)
 	      && pos.y != PNL_HB)
 	    pos.y++;
-        pos.y--;
-    	config->ghost_pos.x = config->piece_pos.x;
+    pos.y--;
+    config->ghost_pos.x = config->piece_pos.x;
 	config->ghost_pos.y = pos.y;
 	
 	// Display next piece
