@@ -34,7 +34,7 @@
 struct row {
 	struct row* next;
 	struct row* prev;
-	enum Color* row;
+	enum Color* values;
 };
 
 struct model {
@@ -53,5 +53,22 @@ struct model* model_init(int width, int height, enum Color def);
  * Free memory used by model. Model remains then unavailable
  */
 void model_free(struct model* model);
+
+/*
+ * get value at jth position of ith row of model.
+ * Return -1 if (i,j) do not belong to model
+ */
+enum Color model_get(struct model* model, int i, int j);
+
+/*
+ * set value at jth position of ith row of model to value.
+ * Return -1 if (i,j) do not belong to model.  1 otherwise
+ */
+int model_set(struct model* model, int i, int j, enum Color value);
+
+/*
+ * get a clone of model
+ */
+struct model* model_clone(struct model* model);
 
 #endif

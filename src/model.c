@@ -27,6 +27,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "model.h"
 
 struct model* model_init(int width, int height, enum Color def)
@@ -48,12 +49,12 @@ struct model* model_init(int width, int height, enum Color def)
 		if(prev != NULL)
 			current->prev->next = current;
 		current->next = NULL;
-		current->row = malloc(sizeof(enum Color) * width);
+		current->values = malloc(sizeof(enum Color) * width);
 
 		int j = 0;
 		for(j = 0;j < width;j++)
 		{
-			current->row[j] = def;
+			current->values[j] = def;
 		}
 
 		if(i == height - 1)
@@ -76,15 +77,108 @@ void model_free(struct model* model)
 	while(next != NULL)
 	{
 		next = current->next;
-		free(current->row);
+		free(current->values);
 		free(current);
 		current = next;
 	}
 }
 
+enum Color model_get(struct model* model, int i, int j)
+{
+	// Out of bound of model
+	if(i >= model->height || j >= model->width)
+	{
+		return -1;
+	}
+
+	// Get right row
+	int k = i;
+	struct row* current = model->first;
+	while(k > 0)
+	{
+		current = current->next;
+		k--;
+	}
+
+	// Return right value
+	return current->values[j];
+}
+
+int model_set(struct model* model, int i, int j, enum Color value)
+{
+	// Out of bound of model
+	if(i >= model->height || j >= model->width)
+	{
+		return -1;
+	}
+
+	// Get right row
+	int k = i;
+	struct row* current = model->first;
+	while(k > 0)
+	{
+		current = current->next;
+		k--;
+	}
+
+	// Set value
+	current->values[j] = value;
+
+	// Return success
+	return 1;
+}
+
+struct model* model_clone(struct model* model)
+{
+	struct model* newMod = malloc(sizeof(struct model));
+	newMod->height = model->height;
+	newMod->width = model->width;
+	struct row* prev = NULL;
+	struct row* current = NULL;
+
+	struct row* oldCur = model->first;
+
+	int i = 0;
+
+	for(i = 0;i < model->height;i++)
+	{
+		current = malloc(sizeof(struct row));
+		if(i == 0)
+			newMod->first = current;
+		current->prev = prev;
+		if(prev != NULL)
+			current->prev->next = current;
+		current->next = NULL;
+		current->values = malloc(sizeof(enum Color) * model->width);
+
+		int j = 0;
+		for(j = 0;j < model->width;j++)
+		{
+			current->values[j] = oldCur->values[j];
+		}
+
+		if(i == model->height - 1)
+		{
+			newMod->last = current;
+		}
+
+		prev = current;
+		current = current->next;
+		oldCur = oldCur->next;
+	}
+	
+	return model;
+
+}
+
 int main(int argc, char* argv[])
 {
 	struct model* model = model_init(12,24,CL_MPT);
+	printf("%d\n",model_get(model,18,9));
+	model_set(model,18,9,CL_GREEN1);
+	printf("%d\n",model_get(model,18,9));
+	struct model* newMod = model_clone(model);
+	printf("%d\n",model_get(newMod,18,9));
 	model_free(model);
 
 	return EXIT_SUCCESS;
