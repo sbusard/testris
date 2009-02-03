@@ -72,15 +72,10 @@ void undo_save(struct Var_conf *config, struct Undo *undo_historic)
     // Malloc item
     item = malloc(sizeof(struct Undo_i));
     
-    // Malloc model
-    item->model = malloc(PNL_HB * sizeof(enum Color*));
-    for(i = 0;i < PNL_HB;i++)
-	item->model[i] = malloc(PNL_LB * sizeof(enum Color));
+    // Clone model
+	item->model = model_clone(config->model);
 
-    // Copy model and piece
-    for(i = 0;i < PNL_HB;i++)
-	for(j = 0;j < PNL_LB;j++)
-	    item->model[i][j] = config->model[i][j];
+    // Copy piece
     item->piece = config->pc_cur_id;
 
     // Copy level and score
@@ -134,7 +129,7 @@ void undo_load(struct Var_conf *config, struct Undo *undo_historic)
         // Copy model
 	for(i = 0;i < PNL_HB;i++)
 	    for(j = 0;j < PNL_LB;j++)
-	        config->model[i][j] = del->model[i][j];
+	        model_set(config->model,i,j,model_get(del->model,i,j));
 
 	// Copy piece
         config->pc_next_id = config->pc_cur_id;
@@ -162,12 +157,7 @@ void undo_load(struct Var_conf *config, struct Undo *undo_historic)
 /* ----- [ undo_free_historic ] --------------------------------------------- */
 static void undo_free_historic(struct Var_conf *config,struct Undo_i *item)
 {
-    int i = 0;
-
-    for(i = 0;i < PNL_HB;i++)
-	free(item->model[i]);
-    free(item->model);
-
+	model_free(item->model);
     free(item);
 }
 

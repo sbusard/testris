@@ -32,6 +32,7 @@
 #include "music.h"
 #include "undo.h"
 #include "ai.h"
+#include "model.h"
 #include <stdlib.h>
 
 /* ----- [ play ] ----------------------------------------------------------- */
@@ -74,14 +75,7 @@ void play(struct Var_conf *config)
     // Pieces initialization
     pc_init(config);
     // Model initialization
-    config->model = malloc(sizeof(enum Color*) * PNL_HB);
-    for(i = 0;i < PNL_HB;i++)
-    {
-	config->model[i] = malloc(sizeof(enum Color) * PNL_LB);
-
-	for(j = 0;j < PNL_LB;j++)
-	    config->model[i][j] = CL_MPT;
-    }
+	config->model = model_init(PNL_LB,PNL_HB,CL_MPT);
     config->pc_cur_id = PCMPTY;
     config->pc_next_id = PCMPTY;
 	
@@ -89,10 +83,10 @@ void play(struct Var_conf *config)
     config->state = J_PLAY;
     // Init timer
     if((config->timer = SDL_AddTimer(config->interv,step,config)) == NULL)
-	fprintf(stderr,
-		"[ERROR] Cannot initialize timer in %s at line %d.\n",
-		__FILE__,
-		__LINE__);
+		fprintf(stderr,
+			"[ERROR] Cannot initialize timer in %s at line %d.\n",
+			__FILE__,
+			__LINE__);
 
     // Bootstrap of the game
     add(config);
@@ -114,8 +108,8 @@ void play(struct Var_conf *config)
     // Play music
     if(PLAY_MUSIC)
     {
-	music_play(config);
-	music_volume(config->music_vol);
+		music_play(config);
+		music_volume(config->music_vol);
     }
 
     // Display initial scores
@@ -469,9 +463,7 @@ void play(struct Var_conf *config)
     // Free pieces
     pc_free(config);
     // Free model
-    for(i = 0;i < PNL_HB;i++)
-	free(config->model[i]);
-    free(config->model);
+	model_free(config->model);
     // Free undo
     undo_free(config,config->undo);
     // Free AI

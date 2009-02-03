@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include "model.h"
 
+/* ----- [ model_init ] ----------------------------------------------------- */
 struct model* model_init(int width, int height, enum Color def)
 {
 	struct model* model = malloc(sizeof(struct model));
@@ -69,6 +70,7 @@ struct model* model_init(int width, int height, enum Color def)
 	return model;
 }
 
+/* ----- [ model_free ] ----------------------------------------------------- */
 void model_free(struct model* model)
 {
 	struct row* current = model->first;
@@ -83,6 +85,7 @@ void model_free(struct model* model)
 	}
 }
 
+/* ----- [ model_get ] ------------------------------------------------------ */
 enum Color model_get(struct model* model, int i, int j)
 {
 	// Out of bound of model
@@ -104,6 +107,7 @@ enum Color model_get(struct model* model, int i, int j)
 	return current->values[j];
 }
 
+/* ----- [ model_set ] ------------------------------------------------------ */
 int model_set(struct model* model, int i, int j, enum Color value)
 {
 	// Out of bound of model
@@ -111,7 +115,6 @@ int model_set(struct model* model, int i, int j, enum Color value)
 	{
 		return -1;
 	}
-
 	// Get right row
 	int k = i;
 	struct row* current = model->first;
@@ -120,7 +123,7 @@ int model_set(struct model* model, int i, int j, enum Color value)
 		current = current->next;
 		k--;
 	}
-
+	
 	// Set value
 	current->values[j] = value;
 
@@ -128,6 +131,7 @@ int model_set(struct model* model, int i, int j, enum Color value)
 	return 1;
 }
 
+/* ----- [ model_clone ] ---------------------------------------------------- */
 struct model* model_clone(struct model* model)
 {
 	struct model* newMod = malloc(sizeof(struct model));
@@ -167,11 +171,11 @@ struct model* model_clone(struct model* model)
 		oldCur = oldCur->next;
 	}
 	
-	return model;
-
+	return newMod;
 }
 
-int main(int argc, char* argv[])
+/* ----- [ main ] ----------------------------------------------------------- */
+int main_tmp(int argc, char* argv[])
 {
 	struct model* model = model_init(12,24,CL_MPT);
 	printf("%d\n",model_get(model,18,9));

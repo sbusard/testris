@@ -30,21 +30,22 @@ all: ${EXEC}
 
 ${EXEC}: ./src/${EXEC}.o ./src/game.o ./src/display.o ./src/highscores.o \
 			 ./src/config.o ./src/undo.o ./src/music.o	 \
-			 ./src/ai.o	./src/events.o				 \
+			 ./src/ai.o	./src/events.o ./src/model.o	 \
 			 ./src/constants.h ./src/pieces.h 		 \
 			 ./src/game.h ./src/display.h ./src/highscores.h \
+			 ./src/model.h \
 			 ./src/config.h ./src/music.h ./src/ai.h ./src/events.h
 	gcc -o  ${EXEC} -g ./src/${EXEC}.o 			\
 		${SDLFLAGS} ${SDLIMGFLAGS} ${SDLTTFFLAGS} ${SDLMIXERFLAGS} \
 		./src/game.o ./src/display.o ./src/highscores.o \
 		./src/config.o ./src/undo.o ./src/music.o	\
-		./src/ai.o ./src/events.o					\
+		./src/ai.o ./src/events.o ./src/model.o			\
 		${ERRORFLAG}
 
 ${EXEC}.o: ./src/${EXEC}.c ./src/constants.h
 	gcc -c -g -o ./src/${EXEC}.c ${ERRORFLAG}
 
-game.o: ./src/game.c ./src/game.h ./src/constants.h ./src/pieces.h
+game.o: ./src/game.c ./src/game.h ./src/constants.h ./src/pieces.h ./src/model.h
 	gcc -c -g -o ./src/game.c ${ERRORFLAG}
 
 display.o: ./src/display.c ./src/display.h ./src/constants.h
@@ -65,8 +66,11 @@ music.o: ./src/music.c ./src/music.h
 ai.o: ./src/ai.c ./src/ai.h
 	gcc -c -g ./src/ai.c ${ERRORFLAG}
 
-events.o: ./src/events.c ./src/events.h
+events.o: ./src/events.c ./src/events.h ./src/model.h
 	gcc -c -g ./src/events.c ${ERRORFLAG}
+
+model.o: ./src/model.c ./src/model.h
+	gcc -c -g ./src/model.c ${ERRORFLAG}
 
 clean:
 	rm -fr ./src/*.o

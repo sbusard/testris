@@ -46,14 +46,14 @@ void ai_go(struct Var_conf *config,SDL_Rect pos);
 /*
  * Get best position for current piece
  */
-void ai_best_pos(struct Var_conf *config,enum Color **model_tmp,
+void ai_best_pos(struct Var_conf *config,struct model *model_tmp,
 		 SDL_Rect *pos,int *turning);
 
 /*
  * Return score of piece piece_id in model at position position
  */
 int ai_score_pos(struct Var_conf *config,
-				 enum Color **model,
+				 struct model *model,
 				 enum Piece_bloc piece_id,
 				 SDL_Rect position);
 #endif

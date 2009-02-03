@@ -30,6 +30,7 @@
 #define UNDO
 
 #include "constants.h"
+#include "model.h"
 
 // Structure represeting an undo item.  It contains a copy
 // of the model and the piece corresponding.
@@ -42,7 +43,7 @@ struct Undo_i {
     int score;
     int lines;
 
-    enum Color **model;
+    struct model *model;
     enum Piece_bloc piece;
 };
 

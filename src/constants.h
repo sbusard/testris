@@ -33,6 +33,7 @@
 #include <SDL/SDL_mixer.h>
 #include <math.h>
 #include "pieces.h"
+#include "model.h"
 
 /*----- Default settings ---------------------------------------------------- */
 
@@ -181,7 +182,8 @@ struct Var_conf
     SDL_Surface *panel;
     SDL_Rect pnl_pos;
 
-    enum Color **model;
+    //enum Color **model;
+	struct model *model;
 
     long interv;
     SDL_TimerID timer;

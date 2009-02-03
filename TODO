@@ -19,6 +19,12 @@ FEATURES
 - Multijoueur : plusieurs pièces
 - Mode : plusieurs pièces en même temps
 - Tableau à hauteur dynamique!!!
+	-> model.c contient une définition d'un modèle basé sur une liste chainée permettant la hauteur dynamique.  Il reste à modifier le jeu pour qu'il prenne cette définition en compte :
+		--> events.c => modifié
+		--> game.c
+		--> display.c
+		--> undo.c
+		--> ai.c
 - Jouer à la souris => améliorer la façon de jouer :
     - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
     - permettre le undo avec la souris

@@ -37,6 +37,7 @@
 #include "undo.h"
 #include "music.h"
 #include "ai.h"
+#include "model.h"
 
 /* ----- [ step ] ----------------------------------------------------------- */
 Uint32 step(Uint32 interv,void *param)
@@ -274,7 +275,7 @@ void check(struct Var_conf *config)
 }
 
 /* ----- [ remove_lines ] --------------------------------------------------- */
-int remove_lines(struct Var_conf *config,enum Color **model, int blink)
+int remove_lines(struct Var_conf *config,struct model *model, int blink)
 {
     int *lines = malloc(sizeof(int) * PNL_HB);
     int i = 0, j = 0, k = 0, sum = 0;
@@ -287,7 +288,7 @@ int remove_lines(struct Var_conf *config,enum Color **model, int blink)
     {
 	sum = 0;
 	for(j = 0;j < PNL_LB;j++)
-	    if(model[i][j] != CL_MPT) sum++;
+	    if(model_get(model,i,j) != CL_MPT) sum++;
 	if(sum == PNL_LB) lines[i] = 1;
     }
 
@@ -305,8 +306,8 @@ int remove_lines(struct Var_conf *config,enum Color **model, int blink)
 		for(j = 0;j < PNL_LB;j++)
 		{
 		    if(lines[i])
-			model[i][j] = (model[i][j] != CL_MPT) ?
-						    CL_MPT : CL_GREY1;
+			model_set(model,i,j,((model_get(model,i,j) != CL_MPT) ?
+						    CL_MPT : CL_GREY1));
 		}
 		
 		SDL_Delay(LN_DELAY);
@@ -320,15 +321,15 @@ int remove_lines(struct Var_conf *config,enum Color **model, int blink)
     {
         if(lines[i])
         {
-	    for(j = 0;j < PNL_LB;j++)
-	    {
-		for(k = i;k > 0;k--)
-		{
-		    model[k][j] = model[k - 1][j];
+			for(j = 0;j < PNL_LB;j++)
+			{
+				for(k = i;k > 0;k--)
+				{
+					model_set(model,k,j,model_get(model,k - 1,j));
+				}
+				model_set(model,0,j,CL_MPT);
+			}
 		}
-		model[0][j] = CL_MPT;
-	    }
-	}
     }
     free(lines);
     return sum;
@@ -336,7 +337,7 @@ int remove_lines(struct Var_conf *config,enum Color **model, int blink)
 
 /* ----- [ turn ] ----------------------------------------------------------- */
 void turn(struct Var_conf *config,
-	  enum Color **model,
+	  struct model *model,
 	  enum Piece_bloc *piece_id,
 	  SDL_Rect *position,
 	  enum Rotation rotation,
@@ -451,7 +452,7 @@ void lost(struct Var_conf *config)
 
 /* ----- [ check_pc ] ------------------------------------------------------- */
 int check_pc(struct Var_conf *config,
-	     enum Color **model,
+	     struct model *model,
 	     enum Color **piece,
 	     SDL_Rect pos)
 {
@@ -479,7 +480,7 @@ int check_pc(struct Var_conf *config,
 	       x + j < PNL_LB 			&&
 	       y + i >= 0			&&
 	       y + i < PNL_HB 			&&
-	       model[y + i][x + j] != CL_MPT	 )
+	       model_get(model,y + i,x + j) != CL_MPT	 )
 		return 0;
 	}
     }
@@ -488,10 +489,10 @@ int check_pc(struct Var_conf *config,
 
 /* ----- [ takeoff ] -------------------------------------------------------- */
 void takeoff(struct Var_conf *config,
-	     enum Color **model,
-	     enum Piece_bloc *pc_id,
-	     SDL_Rect position,
-	     int empty)
+		struct model *model,
+		enum Piece_bloc *pc_id,
+		SDL_Rect position,
+	    int empty)
 {
     int i = 0,j = 0;
     SDL_Rect pos;
@@ -504,9 +505,9 @@ void takeoff(struct Var_conf *config,
 	    if(config->pieces[*pc_id][i][j] != CL_MPT)
 	    {
 	    	pos.x = position.x;
-		pos.y = position.y;
-		model[pos.y + i][pos.x + j] =
-		    config->pieces[*pc_id][i][j] + 1;
+			pos.y = position.y;
+			model_set(	model,pos.y + i,pos.x + j,
+						config->pieces[*pc_id][i][j] + 1);
 	    }
 
     // Empty current piece

@@ -29,6 +29,8 @@
 #ifndef GAME
 #define GAME
 
+#include "model.h"
+
 /*
  * Do a step with the piece
  */
@@ -59,13 +61,13 @@ void check(struct Var_conf *config);
  * Remove complete lines from model and blink them if blink is not 0.
  * Return the number of lines removed
  */
-int remove_lines(struct Var_conf *config,enum Color **model, int blink);
+int remove_lines(struct Var_conf *config,struct model *model, int blink);
 
 /*
  * Turn the current piece
  */
 void turn(struct Var_conf *config,
-	  enum Color **model,
+	  struct model *model,
 	  enum Piece_bloc *piece_id,
 	  SDL_Rect *position,
 	  enum Rotation rotation,
@@ -86,7 +88,7 @@ void lost(struct Var_conf *config);
  * Check if piece can be at position pos in the model
  */
 int check_pc(struct Var_conf *config,
-	     enum Color **model,
+	     struct model *model,
 	     enum Color **piece,
 	     SDL_Rect pos);
 
@@ -94,7 +96,7 @@ int check_pc(struct Var_conf *config,
  * Put the current piece in the model
  */
 void takeoff(struct Var_conf *config,
-	     enum Color **model,
+	     struct model *model,
 	     enum Piece_bloc *pc_id,
 	     SDL_Rect position,
 	     int empty);

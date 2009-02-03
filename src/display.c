@@ -110,11 +110,11 @@ void disp_gamepanel(struct Var_conf *config)
     // Display model
     for(i = 0;i < PNL_HB;i++)
     	for(j = 0;j < PNL_LB;j++)
-	    if(config->model[i][j] != CL_MPT)
+	    if(model_get(config->model,i,j) != CL_MPT)
 	    {
 		pos.x = j * (BLC_L + BLC_SP) + BLC_SP;
 		pos.y = i * (BLC_H + BLC_SP) + BLC_SP;
-		SDL_BlitSurface(blocs[config->model[i][j]],
+		SDL_BlitSurface(blocs[model_get(config->model,i,j)],
 		NULL,config->panel,&pos);
 	    }
     // Display piece ghost

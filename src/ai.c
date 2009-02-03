@@ -44,13 +44,7 @@ void *ai_start(void *arg)
     ENABLE_AUTOPAUSE = 0;
 
 	// Init copy of model
-    enum Color **model_tmp = malloc(sizeof(enum Color*) * PNL_HB);
-    for(i = 0;i < PNL_HB;i++)
-    {
-		model_tmp[i] = malloc(sizeof(enum Color) * PNL_LB);
-		for(j = 0;j < PNL_LB;j++)
-			model_tmp[i][j] = config->model[i][j];
-    }
+    struct model *model_tmp = model_clone(config->model);
 
     printf("AI launched\n");
 
@@ -81,9 +75,7 @@ void *ai_start(void *arg)
     }
 
 	// Free copy of model
-	for(i = 0;i < PNL_HB;i++)
-		free(model_tmp[i]);
-	free(model_tmp);
+	model_free(model_tmp);
 
     // Enable auto pause
     ENABLE_AUTOPAUSE = old_autopause;
@@ -132,7 +124,7 @@ void ai_go(struct Var_conf *config,SDL_Rect pos)
 }
 
 /* ----- [ ai_best_pos ] ---------------------------------------------------- */
-void ai_best_pos(struct Var_conf *config,enum Color **model_tmp,
+void ai_best_pos(struct Var_conf *config,struct model *model_tmp,
 				 SDL_Rect *position, int *turning)
 {
     enum Piece_bloc piece_id = config->pc_cur_id;
@@ -213,7 +205,7 @@ void ai_best_pos(struct Var_conf *config,enum Color **model_tmp,
 		// Copy model
 		for(k = 0;k < PNL_HB;k++)
 		    for(l = 0;l < PNL_LB;l++)
-		    model_tmp[k][l] = config->model[k][l];
+		    model_set(model_tmp,k,l,model_get(config->model,k,l));
 	    }
 	}
 
@@ -266,7 +258,7 @@ void ai_best_pos(struct Var_conf *config,enum Color **model_tmp,
 
 /* ----- [ ai_score_pos ] --------------------------------------------------- */
 int ai_score_pos(struct Var_conf *config,
-				 enum Color **model,
+				 struct model *model,
 				 enum Piece_bloc piece_id,
 				 SDL_Rect position)
 {
@@ -299,7 +291,7 @@ int ai_score_pos(struct Var_conf *config,
 	    // Holes
 	    if((pos.x+k >= 0 && pos.x+k < PNL_LB &&
 		pos.y+l+1 >= 0 && pos.y+l+1 < PNL_HB)
-	       && (model[pos.y+l+1][pos.x+k] == CL_MPT))
+	       && (model_get(model,pos.y+l+1,pos.x+k) == CL_MPT))
 		score -= 72;
 	}
     }
@@ -310,7 +302,7 @@ int ai_score_pos(struct Var_conf *config,
 	sum = 0;
 	for(l = 0;l < PNL_LB;l++)
 	    if((pos.y+k >= 0 && pos.y+k < PNL_HB) &&
-		(config->model[pos.y+k][l] != CL_MPT
+		(model_get(config->model,pos.y+k,l) != CL_MPT
 	     || (l-pos.x >= 0 && l-pos.x < PC_NB_LBLC 
 			 && config->pieces[piece_id][k][l-pos.x] != CL_MPT)))
 		sum++;
