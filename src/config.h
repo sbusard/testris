@@ -36,7 +36,7 @@
 // First element is command string,
 // Second element is config to set,
 // Third element is default value
-#define CONF_TBL_L 28
+#define CONF_TBL_L 29
 #define CONF_TBL_NAMES  {   "disp_bloc_width",	    \
                             "disp_bloc_height",	    \
                             "disp_blocs_space",	    \
@@ -64,7 +64,8 @@
                             "use_undo",		        \
                             "use_speed_cmd",        \
                             "enable_auto_pause",    \
-                            "enable_mouse"          }
+                            "enable_mouse",			\
+							"enable_dynamic_panel"	}
 #define CONF_TBL_VALUES {   &(BLC_L),	    \
 			    &(BLC_H),	    \
 			    &(BLC_SP),	    \
@@ -92,7 +93,8 @@
 			    &(USE_UNDO),    \
 			    &(USE_SHIFT),   \
                 &(ENABLE_AUTOPAUSE),\
-                &(ENABLE_MOUSE) }
+                &(ENABLE_MOUSE),\
+				&(ENABLE_DYNPNL)}
 #define CONF_TBL_DEFAULT    {	DEF_BLC_L,  	    \
 				DEF_BLC_H,	    \
 				DEF_BLC_SP,	    \
@@ -120,7 +122,8 @@
 				DEF_USE_UNDO,	    \
 				DEF_USE_SHIFT,      \
                 DEF_ENABLE_AUTOPAUSE,   \
-                DEF_ENABLE_MOUSE    }				
+                DEF_ENABLE_MOUSE,	\
+				DEF_ENABLE_DYNPNL	}				
 
 
 /*

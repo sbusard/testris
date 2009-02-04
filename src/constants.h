@@ -33,7 +33,7 @@
 #include <SDL/SDL_mixer.h>
 #include <math.h>
 #include "pieces.h"
-#include "model.h"
+//#include "model.h"
 
 /*----- Default settings ---------------------------------------------------- */
 
@@ -75,6 +75,7 @@
 #define DEF_USE_SHIFT 1		// Whether use or not speed command
 #define DEF_ENABLE_AUTOPAUSE 1 // Whether use or not auto pause
 #define DEF_ENABLE_MOUSE 0  // Whether enable or not mouse playing
+#define DEF_ENABLE_DYNPNL 0	// Whether enable or not dynamic panel size
 
 // Music
 #define DEF_PLAY_MUSIC 1	// Whether play or not music
@@ -109,6 +110,8 @@
 #define ENABLE_AUTOPAUSE (config->enable_auto_pause)
 
 #define ENABLE_MOUSE (config->enable_mouse)
+
+#define ENABLE_DYNPNL (config->enable_dynamic_panel)
 
 // Music settings
 #define PLAY_MUSIC (config->set_music_enabled)
@@ -239,5 +242,6 @@ struct Var_conf
     double use_speed_cmd;
     double enable_auto_pause;
     double enable_mouse;
+	double enable_dynamic_panel;
 };
 #endif

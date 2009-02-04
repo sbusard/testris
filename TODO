@@ -21,10 +21,18 @@ FEATURES
 - Tableau à hauteur dynamique!!!
 	-> model.c contient une définition d'un modèle basé sur une liste chainée permettant la hauteur dynamique.  Il reste à modifier le jeu pour qu'il prenne cette définition en compte :
 		--> events.c => modifié
-		--> game.c
-		--> display.c
-		--> undo.c
-		--> ai.c
+		--> game.c => modifié
+		--> display.c => modifié
+		--> undo.c => modifié
+		--> ai.c => modifié
+	-> modifier la fonction add pour prendre en compte, si la config est correcte (ajouter donc aussi le paramètre à la config), le tableau de hauteur dynamique.  Attention il faut aussi modifier le display! :
+		--> model.c & model.h : ajouter la fonction add_first => FAIT
+		--> model.c & model.h : ajouter la fonction remove_first
+		--> game.c : modifier add => FAIT
+		--> game.c : modifier step => FAIT
+		--> constants.h : ajouter la config => FAIT
+		--> config.h : ajouter la config => FAIT
+		--> display.c : modifier le display pour prendre le bon cadre
 - Jouer à la souris => améliorer la façon de jouer :
     - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
     - permettre le undo avec la souris

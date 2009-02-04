@@ -29,6 +29,7 @@
 #ifndef MODEL
 #define MODEL
 
+#include "constants.h"
 #include "pieces.h"
 
 struct row {
@@ -55,6 +56,16 @@ struct model* model_init(int width, int height, enum Color def);
 void model_free(struct model* model);
 
 /*
+ * return current height of the model
+ */
+int model_height(struct model* model);
+
+/*
+ * return current width of the model
+ */
+int model_width(struct model* model);
+
+/*
  * get value at jth position of ith row of model.
  * Return -1 if (i,j) do not belong to model
  */
@@ -65,6 +76,11 @@ enum Color model_get(struct model* model, int i, int j);
  * Return -1 if (i,j) do not belong to model.  1 otherwise
  */
 int model_set(struct model* model, int i, int j, enum Color value);
+
+/*
+ * add a new line full of def above all others
+ */
+int model_add_first(struct model *model,enum Color def);
 
 /*
  * get a clone of model

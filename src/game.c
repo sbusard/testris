@@ -106,7 +106,7 @@ int move(struct Var_conf *config,enum Direction direction)
                    config->model,
                    config->pieces[config->pc_cur_id],
                    pos) 
-              && pos.y != PNL_HB)
+              && pos.y != model_height(config->model))
             pos.y++;
         config->ghost_pos.x = pos.x;
         config->ghost_pos.y = --pos.y;
@@ -191,6 +191,13 @@ void add(struct Var_conf *config)
     pos.x = (PNL_LB / 2) - (PC_NB_LBLC / 2);
     pos.y = 1;
 
+	// Dynamic panel height management
+	if(ENABLE_DYNPNL)
+	{
+		while(!check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
+			model_add_first(config->model,CL_MPT);
+	}
+
     // Position is good
     if(check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
     {
@@ -204,7 +211,7 @@ void add(struct Var_conf *config)
 		       config->model,
 		       config->pieces[config->pc_cur_id],
 		       pos)
-	      && pos.y != PNL_HB)
+	      && pos.y != model_height(config->model))
 	    pos.y++;
     pos.y--;
     config->ghost_pos.x = config->piece_pos.x;
@@ -277,14 +284,15 @@ void check(struct Var_conf *config)
 /* ----- [ remove_lines ] --------------------------------------------------- */
 int remove_lines(struct Var_conf *config,struct model *model, int blink)
 {
-    int *lines = malloc(sizeof(int) * PNL_HB);
+	int height = model_height(model);
+    int *lines = malloc(sizeof(int) * height);
     int i = 0, j = 0, k = 0, sum = 0;
 
-    for(i = 0;i < PNL_HB;i++)
+    for(i = 0;i < height;i++)
 	lines[i] = 0;
 
     // Check full lines
-    for(i = 0;i < PNL_HB;i++)
+    for(i = 0;i < height;i++)
     {
 	sum = 0;
 	for(j = 0;j < PNL_LB;j++)
@@ -294,14 +302,14 @@ int remove_lines(struct Var_conf *config,struct model *model, int blink)
 
     // Count lines to remove
     sum = 0;
-    for(i = 0;i < PNL_HB;i++) if(lines[i]) sum++;
+    for(i = 0;i < height;i++) if(lines[i]) sum++;
 
     if(blink)
     {
 	// Blink lines
 	for(k = 0;k < LN_NBCLIC * 2;k++)
 	{
-	    for(i = 0;i < PNL_HB;i++)
+	    for(i = 0;i < height;i++)
 	    {
 		for(j = 0;j < PNL_LB;j++)
 		{
@@ -317,7 +325,7 @@ int remove_lines(struct Var_conf *config,struct model *model, int blink)
     }
 
     // Delete lines
-    for(i = 0;i < PNL_HB;i++)
+    for(i = 0;i < height;i++)
     {
         if(lines[i])
         {
@@ -374,10 +382,10 @@ void turn(struct Var_conf *config,
 	pos.x = config->piece_pos.x;
 	pos.y = config->piece_pos.y;
 	while(check_pc(config,
-		       config->model,
+		       model,
 		       config->pieces[config->pc_cur_id],
 		       pos)
-	      && pos.y != PNL_HB)
+	      && pos.y != model_height(model))
 	    pos.y++;
 	pos.y--;
 	config->ghost_pos.x = config->piece_pos.x;
@@ -416,7 +424,7 @@ void undo(struct Var_conf *config)
 		       config->model,
 		       config->pieces[config->pc_cur_id],
 		       pos)
-	      && pos.y != PNL_HB)
+	      && pos.y != model_height(config->model))
 	    pos.y++;
         pos.y--;
     	config->ghost_pos.x = config->piece_pos.x;
@@ -469,7 +477,7 @@ int check_pc(struct Var_conf *config,
 	    // not on the panel, then the position is not good
 	    if(piece[i][j] != CL_MPT		&&
 	       (x + j < 0 || x + j >= PNL_LB	||
-	        y + i < 0 || y + i >= PNL_HB)	 )
+	        y + i < 0 || y + i >= model_height(model))	 )
 		return 0;
 	    // if the current bloc is not empty
 	    // the bloc is on the panel
@@ -479,7 +487,7 @@ int check_pc(struct Var_conf *config,
 	       x + j >= 0			&&
 	       x + j < PNL_LB 			&&
 	       y + i >= 0			&&
-	       y + i < PNL_HB 			&&
+	       y + i < model_height(model) 			&&
 	       model_get(model,y + i,x + j) != CL_MPT	 )
 		return 0;
 	}

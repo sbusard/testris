@@ -69,7 +69,7 @@ ai.o: ./src/ai.c ./src/ai.h
 events.o: ./src/events.c ./src/events.h ./src/model.h
 	gcc -c -g ./src/events.c ${ERRORFLAG}
 
-model.o: ./src/model.c ./src/model.h
+model.o: ./src/model.c ./src/model.h ./src/constants.h
 	gcc -c -g ./src/model.c ${ERRORFLAG}
 
 clean:

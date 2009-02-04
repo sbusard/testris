@@ -85,6 +85,18 @@ void model_free(struct model* model)
 	}
 }
 
+/* ----- [ model_height ] --------------------------------------------------- */
+int model_height(struct model *model)
+{
+	return model->height;
+}
+
+/* ----- [ model_width ] ---------------------------------------------------  */
+int model_width(struct model *model)
+{
+	return model->width;
+}
+
 /* ----- [ model_get ] ------------------------------------------------------ */
 enum Color model_get(struct model* model, int i, int j)
 {
@@ -172,6 +184,31 @@ struct model* model_clone(struct model* model)
 	}
 	
 	return newMod;
+}
+
+/* ----- [ model_add_first ] ------------------------------------------------ */
+int model_add_first(struct model *model,enum Color def)
+{
+	struct row *new = malloc(sizeof(struct row));
+
+	new->next = model->first;
+	new->prev = NULL;
+	model->first = new;
+	if(new->next != NULL)
+		new->next->prev = new;
+	else
+		model->last = new;
+	new->values = malloc(sizeof(enum Color) * model->width);
+
+	int j = 0;
+	for(j = 0;j < model->width;j++)
+	{
+		new->values[j] = def;
+	}
+
+	model->height = model->height + 1;
+
+	return 1;
 }
 
 /* ----- [ main ] ----------------------------------------------------------- */
