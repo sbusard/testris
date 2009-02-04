@@ -27,9 +27,10 @@ FEATURES
 		--> ai.c => modifié
 	-> modifier la fonction add pour prendre en compte, si la config est correcte (ajouter donc aussi le paramètre à la config), le tableau de hauteur dynamique.  Attention il faut aussi modifier le display! :
 		--> model.c & model.h : ajouter la fonction add_first => FAIT
-		--> model.c & model.h : ajouter la fonction remove_first
-		--> game.c : modifier add => FAIT
+		--> model.c & model.h : ajouter la fonction remove_first => FAIT
+		--> game.c : modifier add (ajouter plus qu'une ligne!) => FAIT
 		--> game.c : modifier step => FAIT
+		--> game.c : modifier remove_lines (pour supprimer des lignes) => retirer les lignes quand il n'y a plus assez de lignes affichées (quand la première moitié de l'écran est vide par exemple)
 		--> constants.h : ajouter la config => FAIT
 		--> config.h : ajouter la config => FAIT
 		--> display.c : modifier le display pour prendre le bon cadre

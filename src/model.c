@@ -211,6 +211,35 @@ int model_add_first(struct model *model,enum Color def)
 	return 1;
 }
 
+/* ----- [ model_remove_first ] --------------------------------------------- */
+int model_remove_first(struct model *model,enum Color def)
+{
+	// Check if first line exists
+	if(model->first == NULL)
+		return -1;
+
+	// Check if first line is full of def
+	int i = 0;
+	for(;i < model->width;i++)
+		if(model->first->values[i] != def)
+			return -1;
+
+	// Remove first line
+	struct row *first = model->first;
+	model->first = first->next;
+	if(model->first != NULL)
+		model->first->prev = NULL;
+
+	// Free first line
+	free(first->values);
+	free(first);
+
+	// Update model height
+	model->height = model->height - 1;
+
+	return 1;
+}
+
 /* ----- [ main ] ----------------------------------------------------------- */
 int main_tmp(int argc, char* argv[])
 {

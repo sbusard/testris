@@ -83,6 +83,12 @@ int model_set(struct model* model, int i, int j, enum Color value);
 int model_add_first(struct model *model,enum Color def);
 
 /*
+ * remove the line full of def above all others.  If the first line is not
+ * full of def, the line is not removed and -1 is returned
+ */
+int model_remove_first(struct model *model,enum Color def);
+
+/*
  * get a clone of model
  */
 struct model* model_clone(struct model* model);

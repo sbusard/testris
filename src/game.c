@@ -194,7 +194,15 @@ void add(struct Var_conf *config)
 	// Dynamic panel height management
 	if(ENABLE_DYNPNL)
 	{
+		int blocked = 0;
+		if(!check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
+			blocked = 1;
+
 		while(!check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
+			model_add_first(config->model,CL_MPT);
+
+		int r = 0;
+		for(;r < PC_NB_HBLC && blocked;r++)
 			model_add_first(config->model,CL_MPT);
 	}
 
@@ -340,6 +348,14 @@ int remove_lines(struct Var_conf *config,struct model *model, int blink)
 		}
     }
     free(lines);
+
+	if(ENABLE_DYNPNL)
+	{
+		int r = 0;
+		for(;r < sum;r++)
+			model_remove_first(model,CL_MPT);
+	}	
+
     return sum;
 }
 
