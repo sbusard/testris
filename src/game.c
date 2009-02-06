@@ -200,7 +200,7 @@ void add(struct Var_conf *config)
 		int empty = 1;
 
 		// Check if half the panel is empty
-		for(r = 0;r < PNL_HB / 2 && empty;r++)
+		for(r = 0;r < PNL_HB / 3 && empty;r++)
 		{
 			for(s = 0;s < model_width(config->model) && empty;s++)
 			{

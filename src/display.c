@@ -80,6 +80,9 @@ void disp_window(struct Var_conf *config)
 /* ----- [ disp_gamepanel ] ------------------------------------------------- */
 void disp_gamepanel(struct Var_conf *config)
 {
+	int max(int i,int j) { return (i < j) ? j : i; }
+	int min(int i,int j) { return (i < j) ? i : j; }
+
     SDL_Surface *ccur = NULL, *cghost = NULL;
     SDL_Rect pos;
     int i = 0,j = 0;
@@ -107,14 +110,19 @@ void disp_gamepanel(struct Var_conf *config)
     // Create background
     SDL_FillRect(config->panel,NULL,SDL_MapRGB(config->screen->format,0,0,0));
 
+	// Dynamic height panel management
+//	int offset = max(min(0,config->piece_pos.y + (PNL_HB/2 - PC_NB_HBLC/2)),config->piece_pos.y - (PNL_HB/2 - PC_NB_HBLC/2));
+	int offset = max(0,config->piece_pos.y - (PNL_HB/2 - PC_NB_HBLC/2));
+	offset = (offset + PNL_HB > model_height(config->model)) ? model_height(config->model) - PNL_HB : offset; 
+
     // Display model
     for(i = 0;i < PNL_HB;i++)
     	for(j = 0;j < PNL_LB;j++)
-	    if(model_get(config->model,i,j) != CL_MPT)
+	    if(model_get(config->model,i + offset,j) != CL_MPT)
 	    {
 		pos.x = j * (BLC_L + BLC_SP) + BLC_SP;
 		pos.y = i * (BLC_H + BLC_SP) + BLC_SP;
-		SDL_BlitSurface(blocs[model_get(config->model,i,j)],
+		SDL_BlitSurface(blocs[model_get(config->model,i + offset,j)],
 		NULL,config->panel,&pos);
 	    }
     // Display piece ghost
@@ -126,7 +134,7 @@ void disp_gamepanel(struct Var_conf *config)
 		{
 		    pos.x = config->ghost_pos.x * (BLC_L + BLC_SP); 
 		    pos.x += j * (BLC_L + BLC_SP) + BLC_SP;
-		    pos.y = config->ghost_pos.y * (BLC_L + BLC_SP);
+		    pos.y = (config->ghost_pos.y - offset) * (BLC_L + BLC_SP);
 		    pos.y += i * (BLC_H + BLC_SP) + BLC_SP; 
 		    SDL_BlitSurface(cghost,NULL,config->panel,&pos);
 		}
@@ -140,7 +148,7 @@ void disp_gamepanel(struct Var_conf *config)
 	    {
 		pos.x = config->piece_pos.x * (BLC_L + BLC_SP); 
 		pos.x += j * (BLC_L + BLC_SP) + BLC_SP;
-		pos.y = config->piece_pos.y * (BLC_L + BLC_SP);
+		pos.y = (config->piece_pos.y - offset) * (BLC_L + BLC_SP);
 		pos.y += i * (BLC_H + BLC_SP) + BLC_SP; 
 		SDL_BlitSurface(ccur,NULL,config->panel,&pos);
 	    }
