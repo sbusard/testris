@@ -38,8 +38,9 @@ Versions history
 
  - 0.9-beta : :
     + Source of music added in README
-    + AI
-    + Mouse managment
+    + AI (EXPERIMENTAL)
+    + Mouse managment (EXPERIMENTAL)
+	+ Dynamic height panel option (EXPERIMENTAL)
  - 0.8-beta : 08.04.2008 :
     + Memory leaks fixed
     + Bugs fixed
