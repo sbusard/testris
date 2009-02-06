@@ -191,6 +191,31 @@ void add(struct Var_conf *config)
     pos.x = (PNL_LB / 2) - (PC_NB_LBLC / 2);
     pos.y = 1;
 
+	// Dynamic height panel management
+	if(ENABLE_DYNPNL)
+	{
+		// Empty lines check
+		int r = 0;
+		int s = 0;
+		int empty = 1;
+
+		// Check if half the panel is empty
+		for(r = 0;r < PNL_HB / 2 && empty;r++)
+		{
+			for(s = 0;s < model_width(config->model) && empty;s++)
+			{
+				if(model_get(config->model,r,s) != CL_MPT)
+					empty = 0;
+			}
+		}
+
+		// If a quarter of the panel is not empty, add a quarter of empty lines
+		if(!empty)
+			for(r = 0;r < PNL_HB / 4;r++)
+				model_add_first(config->model,CL_MPT);
+
+	}	
+
     // Position is good
     if(check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
     {
@@ -334,21 +359,12 @@ int remove_lines(struct Var_conf *config,struct model *model, int blink)
     }
     free(lines);
 
-	// Remove lines from the dynamic-height model
 	if(ENABLE_DYNPNL)
 	{
 		int r = 0;
-		int s = 0;
-		int empty = 1;
-		for(r = 0;r < PNL_HB / 2 && empty;r++)
-			for(s = 0;s < model_width(model) && empty;s++)
-				if(model_get(model,r,s) != CL_MPT)
-					empty = 0;
-
-		if(empty)
-			for(r = 0;r < PNL_HB / 2 && model_height(model) > PNL_HB;r++)
-				model_remove_first(model,CL_MPT);
-	}	
+		for(r = 0;r < sum && model_height(config->model) > PNL_HB;r++)
+			model_remove_first(config->model,CL_MPT);
+	}
 
     return sum;
 }
@@ -528,27 +544,7 @@ void takeoff(struct Var_conf *config,
 						config->pieces[*pc_id][i][j] + 1);
 	    }
 
-	// Dynamic height panel management
-	if(ENABLE_DYNPNL)
-	{
-		int r = 0;
-		int s = 0;
-		int blocked = 0;
-		for(r = 0;r < PC_NB_HBLC && !blocked;r++)
-		{
-			for(s = 0;s < model_width(model) && !blocked;s++)
-			{
-				if(model_get(model,r,s) != CL_MPT)
-					blocked = 1;
-			}
-		}
-
-		if(blocked)
-			for(r = 0;r < PC_NB_HBLC * 3 / 2;r++)
-				model_add_first(model,CL_MPT);
-	}
-
-    // Empty current piece
+	// Empty current piece
     if(empty) *pc_id = PCMPTY;
 }
 
