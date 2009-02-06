@@ -34,7 +34,7 @@ FEATURES
 		--> game.c : modifier remove_lines (pour supprimer des lignes) => retirer les lignes quand il n'y a plus assez de lignes affichées (quand la première moitié de l'écran est vide par exemple) => FAIT
 		--> constants.h : ajouter la config => FAIT
 		--> config.h : ajouter la config => FAIT
-		--> display.c : modifier le display pour prendre le bon cadre
+		--> display.c : modifier le display pour prendre le bon cadre => FAIT
 - Jouer à la souris => améliorer la façon de jouer :
     - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
     - permettre le undo avec la souris
