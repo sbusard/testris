@@ -121,6 +121,7 @@ void ai_go(struct Var_conf *config,SDL_Rect pos)
 
 	//drop(config);
     }
+	while(config->pc_cur_id != PCMPTY) {}
 }
 
 /* ----- [ ai_best_pos ] ---------------------------------------------------- */
