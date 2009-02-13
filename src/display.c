@@ -111,7 +111,6 @@ void disp_gamepanel(struct Var_conf *config)
     SDL_FillRect(config->panel,NULL,SDL_MapRGB(config->screen->format,0,0,0));
 
 	// Dynamic height panel management
-//	int offset = max(min(0,config->piece_pos.y + (PNL_HB/2 - PC_NB_HBLC/2)),config->piece_pos.y - (PNL_HB/2 - PC_NB_HBLC/2));
 	int offset = max(0,config->piece_pos.y - (PNL_HB/2 - PC_NB_HBLC/2));
 	offset = (offset + PNL_HB > model_height(config->model)) ? model_height(config->model) - PNL_HB : offset; 
 

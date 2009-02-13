@@ -79,8 +79,9 @@ BUGS
 - Gestion de plusieurs évènements en même temps ? Quand on maintient gauche puis qu'on appuie sur shift, ça stoppe net
 - Blink lines : bug de couleur
 - Blink lines : bug évènements => flusher tous les évènements à la fin de check() ???
-- IA : n'attend pas que la pièce soit en place pour recommencer les calculs
+- Bug d'affichage dans le dynpnl : affichage de mauvais blocs ou bug dans le modèle?
 
+X IA : n'attend pas que la pièce soit en place pour recommencer les calculs
 X Dans l'IA, lorsqu'une première pièce pourrait faire des lignes, ces lignes ne sont pas enlevées pour tester la seconde pièce.
 X Undo ne tient pas compte des lignes effacées => sauvegarder tout le modèle?!
 X Memory leak!!! Revérifier toutes les allocations/désallocations => semble corrigé

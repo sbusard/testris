@@ -1,4 +1,5 @@
-*.swp
+launcher.sh
+swp
 *~
 src/*.o
 TEsTris.scores
