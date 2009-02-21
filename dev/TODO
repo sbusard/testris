@@ -80,6 +80,7 @@ BUGS
 - Blink lines : bug de couleur
 - Blink lines : bug évènements => flusher tous les évènements à la fin de check() ???
 - Bug d'affichage dans le dynpnl : affichage de mauvais blocs ou bug dans le modèle?
+- AI : ne tient pas compte de tout le modèle mais juste de la portion PNL_HB * PNL_LB (au lieu de model_height(model) * model_width(model))
 
 X IA : n'attend pas que la pièce soit en place pour recommencer les calculs
 X Dans l'IA, lorsqu'une première pièce pourrait faire des lignes, ces lignes ne sont pas enlevées pour tester la seconde pièce.
