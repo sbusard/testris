@@ -200,7 +200,7 @@ void add(struct Var_conf *config)
 		int empty = 1;
 
 		// Check if half the panel is empty
-		for(r = 0;r < PNL_HB / 3 && empty;r++)
+		for(r = 0;r < 2 * PC_NB_HBLC && empty;r++)
 		{
 			for(s = 0;s < model_width(config->model) && empty;s++)
 			{
@@ -211,7 +211,7 @@ void add(struct Var_conf *config)
 
 		// If a quarter of the panel is not empty, add a quarter of empty lines
 		if(!empty)
-			for(r = 0;r < PNL_HB / 4;r++)
+			for(r = 0;r < 2 * PC_NB_HBLC;r++)
 				model_add_first(config->model,CL_MPT);
 
 	}	
