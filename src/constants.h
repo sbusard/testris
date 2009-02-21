@@ -207,6 +207,7 @@ struct Var_conf
     int music_vol;
 
     int ai_started;
+	int ai_trigger;
 
 	int dropping;
 	int down_pressed;

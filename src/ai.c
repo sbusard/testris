@@ -84,6 +84,9 @@ void *ai_start(void *arg)
 /* ----- [ ai_go ] ---------------------------------------------------------- */
 void ai_go(struct Var_conf *config,SDL_Rect pos)
 {
+	// Untrigger ai
+	config->ai_trigger = 0;
+
     enum Piece_bloc pc = config->pc_cur_id;
     while(pos.x != config->piece_pos.x && config->pc_cur_id == pc)
     {
@@ -121,7 +124,7 @@ void ai_go(struct Var_conf *config,SDL_Rect pos)
 
 	//drop(config);
     }
-	while(config->pc_cur_id != PCMPTY) {}
+	while(!config->ai_trigger) {}
 }
 
 /* ----- [ ai_best_pos ] ---------------------------------------------------- */

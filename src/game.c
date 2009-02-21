@@ -220,42 +220,46 @@ void add(struct Var_conf *config)
     if(check_pc(config,config->model,config->pieces[config->pc_cur_id],pos))
     {
     	config->piece_pos.x = pos.x;
-	config->piece_pos.y = pos.y;
+		config->piece_pos.y = pos.y;
 
-	// Piece ghost
-	pos.x = config->piece_pos.x;
-	pos.y = config->piece_pos.y;
-	while(check_pc(config,
-		       config->model,
-		       config->pieces[config->pc_cur_id],
-		       pos)
-	      && pos.y != model_height(config->model))
-	    pos.y++;
-    pos.y--;
-    config->ghost_pos.x = config->piece_pos.x;
-	config->ghost_pos.y = pos.y;
-	
-	// Display next piece
-	disp_next_pc(config);
+		// Piece ghost
+		pos.x = config->piece_pos.x;
+		pos.y = config->piece_pos.y;
+		while(check_pc(config,
+				   config->model,
+				   config->pieces[config->pc_cur_id],
+				   pos)
+			  && pos.y != model_height(config->model))
+			pos.y++;
+		pos.y--;
+		config->ghost_pos.x = config->piece_pos.x;
+		config->ghost_pos.y = pos.y;
+		
+		// Display next piece
+		disp_next_pc(config);
 
-	// Enable timer
-	config->state = J_PLAY;
-	if(timer)
-	    if(!config->dropping && !config->down_pressed 
-	       && (config->timer = SDL_AddTimer(config->interv,
-						step,config)) == NULL)
-		fprintf(stderr,
-			"[ERROR] Cannot initialize timer in %s at line %d.\n",
-			__FILE__,__LINE__);
+		// Trigger AI if launched
+		if(config->ai_started)
+			config->ai_trigger = 1;
 
-	return;
+		// Enable timer
+		config->state = J_PLAY;
+		if(timer)
+			if(!config->dropping && !config->down_pressed 
+			   && (config->timer = SDL_AddTimer(config->interv,
+							step,config)) == NULL)
+			fprintf(stderr,
+				"[ERROR] Cannot initialize timer in %s at line %d.\n",
+				__FILE__,__LINE__);
+
+		return;
     }
     // Game Over
     else
     {
     	config->pc_cur_id = PCMPTY;
-	lost(config);
-	return;
+		lost(config);
+		return;
     }
 }
 
