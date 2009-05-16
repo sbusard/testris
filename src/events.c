@@ -259,8 +259,14 @@ void play(struct Var_conf *config)
                     "[ERROR] Cannot initialize timer in %s at line %d.\n",
                                     __FILE__,__LINE__);
                         }
-                        default:
-                            break;
+						break;
+					case SDL_BUTTON_WHEELUP:
+						if(config->state == J_PLAY && USE_UNDO
+								&& !undo_pressed && config->undo->counter > 0)
+							undo(config);
+						undo_pressed = 1;
+					default:
+						break;
                     }
             break;
 		// A key released			
