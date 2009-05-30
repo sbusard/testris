@@ -306,7 +306,7 @@ int ai_score_pos(struct Var_conf *config,
 	sum = 0;
 	for(l = 0;l < PNL_LB;l++)
 	    if((pos.y+k >= 0 && pos.y+k < PNL_HB) &&
-		(model_get(config->model,pos.y+k,l) != CL_MPT
+		(model_get(model,pos.y+k,l) != CL_MPT
 	     || (l-pos.x >= 0 && l-pos.x < PC_NB_LBLC 
 			 && config->pieces[piece_id][k][l-pos.x] != CL_MPT)))
 		sum++;
@@ -316,6 +316,39 @@ int ai_score_pos(struct Var_conf *config,
     score += lines*lines*PNL_LB;
     // Height is very bad
     score += 4*pos.y;
+
+	// Try to reduce height variance
+	int i = 0, j = 0;
+	int min_height = -1;
+	int max_height = PNL_HB + 1;
+	int sum_height = 0;
+	int mean_height = 0;
+	int heights[(int)PNL_LB];
+	// Compute mean
+	for(i = 0;i < PNL_LB;i++) {
+		for(j = 0;j < PNL_HB;j++) {
+			if(model_get(model,i,j) != CL_MPT
+				|| (pos.y <= j && j < pos.y + PC_NB_HBLC &&
+					pos.x <= i && i < pos.x + PC_NB_LBLC &&
+					config->pieces[piece_id][j - pos.y][i - pos.x] != CL_MPT)) {
+				heights[i] = j;
+				sum_height += j;
+				break;
+			}
+		}
+		// If end reached, current height not yet taken into account
+		if(j == PNL_HB) {
+			heights[i] = j;
+			sum_height += PNL_HB;
+		}
+	}
+	mean_height = sum_height / PNL_LB;
+	// Compute variance
+	int var_height = 0;
+	for(i = 0;i < PNL_LB;i++) {
+		var_height += (heights[i] - mean_height) * (heights[i] - mean_height);
+	}
+	score -= 4 * var_height;
 
     return score;
 }
