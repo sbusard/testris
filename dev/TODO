@@ -18,7 +18,11 @@ FEATURES
 - ICONE
 - Multijoueur : plusieurs pièces
 - Mode : plusieurs pièces en même temps
-- Tableau à hauteur dynamique!!!
+- Jouer à la souris => améliorer la façon de jouer :
+    - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
+    - permettre le undo avec la souris => Wheel mouse up
+
+X Tableau à hauteur dynamique!!!
 	-> model.c contient une définition d'un modèle basé sur une liste chainée permettant la hauteur dynamique.  Il reste à modifier le jeu pour qu'il prenne cette définition en compte :
 		--> events.c => modifié
 		--> game.c => modifié
@@ -35,10 +39,6 @@ FEATURES
 		--> constants.h : ajouter la config => FAIT
 		--> config.h : ajouter la config => FAIT
 		--> display.c : modifier le display pour prendre le bon cadre => FAIT
-- Jouer à la souris => améliorer la façon de jouer :
-    - quand la nouvelle pièce apparait, la faire apparaitre au dessus de la souris
-    - permettre le undo avec la souris
-
 X IA qui joue à ma place
 X Enregistrer les scores même quand on n'a pas game over
 X CITER LA SOURCE DES MUSIQUES
