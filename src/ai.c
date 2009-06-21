@@ -74,6 +74,8 @@ void *ai_start(void *arg)
 	SDL_Delay(100);
     }
 
+	printf("AI stopped\n");
+
 	// Free copy of model
 	model_free(model_tmp);
 
@@ -88,7 +90,8 @@ void ai_go(struct Var_conf *config,SDL_Rect pos)
 	config->ai_trigger = 0;
 
     enum Piece_bloc pc = config->pc_cur_id;
-    while(pos.x != config->piece_pos.x && config->pc_cur_id == pc)
+    while(pos.x != config->piece_pos.x && config->pc_cur_id == pc
+			&& config->ai_started)
     {
 	SDL_Event event;
 	event.type = SDL_KEYDOWN;
@@ -327,7 +330,7 @@ int ai_score_pos(struct Var_conf *config,
 	// Compute mean
 	for(i = 0;i < PNL_LB;i++) {
 		for(j = 0;j < PNL_HB;j++) {
-			if(model_get(model,i,j) != CL_MPT
+			if(	model_get(model,i,j) != CL_MPT
 				|| (pos.y <= j && j < pos.y + PC_NB_HBLC &&
 					pos.x <= i && i < pos.x + PC_NB_LBLC &&
 					config->pieces[piece_id][j - pos.y][i - pos.x] != CL_MPT)) {

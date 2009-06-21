@@ -94,13 +94,13 @@ void disp_gamepanel(struct Var_conf *config)
     if(SHOW_COLORS)
     {
     	SDL_FillRect(ccur,NULL,SDL_MapRGB(config->screen->format,
-    		     colors[pc_assoc[config->pc_cur_id][3]][1],
-		     colors[pc_assoc[config->pc_cur_id][3]][2],
-		     colors[pc_assoc[config->pc_cur_id][3]][3]));
+			colors[pc_assoc[config->pc_cur_id][3]][1],
+			colors[pc_assoc[config->pc_cur_id][3]][2],
+			colors[pc_assoc[config->pc_cur_id][3]][3]));
 	SDL_FillRect(cghost,NULL,SDL_MapRGB(config->screen->format,
-		     colors[pc_assoc[config->pc_cur_id][5]][1],
-		     colors[pc_assoc[config->pc_cur_id][5]][2],
-		     colors[pc_assoc[config->pc_cur_id][5]][3]));
+			colors[pc_assoc[config->pc_cur_id][5]][1],
+			colors[pc_assoc[config->pc_cur_id][5]][2],
+			colors[pc_assoc[config->pc_cur_id][5]][3]));
     }
     else
     {

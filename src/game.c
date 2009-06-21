@@ -483,6 +483,7 @@ void undo(struct Var_conf *config)
 void lost(struct Var_conf *config)
 {
     config->state = J_LOST;
+	config->ai_started = 0;
     high_save(config->lines,config->score);
     disp_scores(config);
     disp_gameover(config);
