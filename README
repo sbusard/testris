@@ -36,6 +36,9 @@ You can configure several settings of the game in the file TEsTris.conf.
 Versions history
 ----------------
 
+ - 0.10-beta :
+	+ Wheel mouse up to undo last drop
+	+
  - 0.9-beta : 07.02.2009 :
     + Source of music added in README
     + AI (EXPERIMENTAL)
