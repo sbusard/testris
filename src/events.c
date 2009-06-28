@@ -264,7 +264,6 @@ void play(struct Var_conf *config)
 						if(config->state == J_PLAY && USE_UNDO
 								&& !undo_pressed && config->undo->counter > 0)
 							undo(config);
-						undo_pressed = 1;
 					default:
 						break;
                     }
