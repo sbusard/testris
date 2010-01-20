@@ -82,6 +82,16 @@ BUGS
 - Bug d'affichage dans le dynpnl : affichage de mauvais blocs ou bug dans le modèle?
 - AI : ne tient pas compte de tout le modèle mais juste de la portion PNL_HB * PNL_LB (au lieu de model_height(model) * model_width(model))
 - AI : parfois, l'IA met toutes les pièces à gauche, sans aucune raison.
+- AI : ne s'arrête pas quand on relance une partie (touche N en pleine partie de l'IA)
+-
+sbusard@Dexter:~/Projets/TEsTris/testris$ ./TEsTris
+X Error of failed request:  BadLength (poly request too large or internal Xlib length error)
+	X Error of failed request:  BadLength (poly request too large or internal Xlib length error)
+	Major opcode of failed request:  3 (X_GetWindowAttributes)
+	Serial number of failed request:  1651
+	Current serial number in output stream:  1652
+	Major opcode of failed request:  4 (X_DestroyWindow)
+
 
 X IA : n'attend pas que la pièce soit en place pour recommencer les calculs
 X Dans l'IA, lorsqu'une première pièce pourrait faire des lignes, ces lignes ne sont pas enlevées pour tester la seconde pièce.
